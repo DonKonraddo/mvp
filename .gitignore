@@ -342,6 +342,7 @@ $RECYCLE.BIN/
 *.lnk
 
 backend/dist
+backend/.env
 backend/node_modules
 # Tests
 backend/coverage
