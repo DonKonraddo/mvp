@@ -341,15 +341,16 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-backend/dist
-backend/.env
-backend/node_modules
+/backend/dist
+/backend/.env
+/backend/node_modules
+/backend/src/graphql/schema.gql
 # Tests
-backend/coverage
-backend/.nyc_output
+/backend/coverage
+/backend/.nyc_output
 
 
-frontend/node_modules
-frontend/.next
+/frontend/node_modules
+/frontend/.next
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,node,react,windows,visualstudiocode,webstorm
