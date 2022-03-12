@@ -3,7 +3,7 @@ import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
 
-import { OrganizationModule } from '~/graphql/organization/organization.module';
+import { PersonModule } from '~/graphql/person/person.module';
 
 @Module({
   imports: [
@@ -13,7 +13,7 @@ import { OrganizationModule } from '~/graphql/organization/organization.module';
       introspection: true,
       playground: true,
     }),
-    OrganizationModule,
+    PersonModule,
   ],
 })
 export class GraphqlModule {}
