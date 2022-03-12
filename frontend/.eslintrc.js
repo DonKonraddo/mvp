@@ -19,6 +19,6 @@ module.exports = {
     'simple-import-sort/exports': 'error',
     'require-await': 'error',
 
-    'no-console': ['error', { allow: ['warn', 'error'] }],
+    'no-console': ['error', { allow: ['warn', 'error', 'log'] }],
   },
 };

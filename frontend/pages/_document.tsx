@@ -1,6 +1,8 @@
+import { useStaticRendering } from 'mobx-react-lite';
 import { Head, Html, Main, NextScript } from 'next/document';
 
 export default function Document() {
+  useStaticRendering(true);
   return (
     <Html>
       <Head>

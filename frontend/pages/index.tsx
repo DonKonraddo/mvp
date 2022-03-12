@@ -1,8 +1,8 @@
-// eslint-disable-next-line imports
 import Button from '@mui/material/Button';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 
+import { MobxComponentText } from '~/components/MobxComponentText';
 import { MyCard, MyComponent } from '~/components/MyCard';
 import { TestComponent } from '~/components/TestComponent';
 import styles from '~/styles/Home.module.css';
@@ -24,8 +24,9 @@ const Home: NextPage = () => {
       <main className={styles.main}>
         <TestComponent name={'onrad'} />
         <MyComponent>
-          <p>sdsdsd</p>
+          <p>test styled component</p>
         </MyComponent>
+        <MobxComponentText />
         <MyCard />
         <Button variant="contained">Hello World</Button>
       </main>
