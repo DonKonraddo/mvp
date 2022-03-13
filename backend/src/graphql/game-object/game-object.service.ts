@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { CreateGameObjectInput } from '~/graphql/game-object/dto/create-game-object.input';
+import { GameObjectType } from '~/graphql/game-object/dto/game-object.type';
 import { UpdateGameObjectInput } from '~/graphql/game-object/dto/update-game-object.input';
 import { GameObject } from '~/graphql/game-object/entities/game-object.entity';
 
@@ -28,15 +29,21 @@ export class GameObjectService {
     return array;
   }
 
-  findRandomlyOne(omitIds?: string[]): Promise<GameObject> {
+  findRandomlyOne(
+    gameObjectType: GameObjectType,
+    omitIds?: string[],
+  ): Promise<GameObject | undefined> {
     return this.gameObjectRepository
       .createQueryBuilder('gameObject')
-      .where('gameObject.id NOT IN (:omitIds)', {
+      .where('gameObject.gameObjectType = :gameObjectType', {
+        gameObjectType,
+      })
+      .andWhere('gameObject.id NOT IN (:omitIds)', {
         omitIds: this.fillEmptyArray(omitIds),
       })
       .orderBy('RAND()')
       .limit(1)
-      .getOneOrFail();
+      .getOne();
   }
 
   async update(

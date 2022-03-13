@@ -1,6 +1,7 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
 import { CreateGameObjectInput } from '~/graphql/game-object/dto/create-game-object.input';
+import { GameObjectType } from '~/graphql/game-object/dto/game-object.type';
 import { UpdateGameObjectInput } from '~/graphql/game-object/dto/update-game-object.input';
 import { GameObject } from '~/graphql/game-object/entities/game-object.entity';
 import { GameObjectService } from '~/graphql/game-object/game-object.service';
@@ -16,11 +17,13 @@ export class GameObjectResolver {
     return this.gameObjectService.create(createGameObjectInput);
   }
 
-  @Query(() => GameObject)
+  @Query(() => GameObject, { nullable: true })
   findRandomlyOnePerson(
+    @Args('gameObjectType', { type: () => GameObjectType })
+    gameObjectType: GameObjectType,
     @Args('id', { nullable: true, type: () => [String] }) omitIds: string[],
-  ): Promise<GameObject> {
-    return this.gameObjectService.findRandomlyOne(omitIds);
+  ): Promise<GameObject | undefined> {
+    return this.gameObjectService.findRandomlyOne(gameObjectType, omitIds);
   }
 
   @Query(() => GameObject, { name: 'gameObject' })
