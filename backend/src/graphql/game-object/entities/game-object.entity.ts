@@ -3,7 +3,7 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @ObjectType()
 @Entity()
-export class Person {
+export class GameObject {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
@@ -18,4 +18,4 @@ export class Person {
 }
 
 @InputType()
-export class PersonInput extends Person {}
+export class GameObjectInput extends GameObject {}
