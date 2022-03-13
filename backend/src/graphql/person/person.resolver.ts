@@ -1,4 +1,4 @@
-import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
 import { CreatePersonInput } from '~/graphql/person/dto/create-person.input';
 import { UpdatePersonInput } from '~/graphql/person/dto/update-person.input';
@@ -12,29 +12,31 @@ export class PersonResolver {
   @Mutation(() => Person)
   createPerson(
     @Args('createPersonInput') createPersonInput: CreatePersonInput,
-  ) {
+  ): Promise<Person> {
     return this.personService.create(createPersonInput);
   }
 
-  @Query(() => [Person], { name: 'person' })
-  findAll() {
-    return this.personService.findAll();
+  @Query(() => Person)
+  findRandomlyOnePerson(
+    @Args('id', { nullable: true, type: () => [String] }) omitIds: string[],
+  ): Promise<Person> {
+    return this.personService.findRandomlyOne(omitIds);
   }
 
   @Query(() => Person, { name: 'person' })
-  findOne(@Args('id') id: string) {
+  findOne(@Args('id') id: string): Promise<Person> {
     return this.personService.findOne(id);
   }
 
   @Mutation(() => Person)
   updatePerson(
     @Args('updatePersonInput') updatePersonInput: UpdatePersonInput,
-  ) {
+  ): Promise<Person> {
     return this.personService.update(updatePersonInput.id, updatePersonInput);
   }
 
-  @Mutation(() => Person)
-  removePerson(@Args('id') id: string) {
-    return this.personService.remove(id);
+  @Mutation(() => Boolean)
+  deletePerson(@Args('id') id: string): Promise<boolean> {
+    return this.personService.delete(id);
   }
 }

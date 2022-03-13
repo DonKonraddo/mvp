@@ -16,13 +16,17 @@ module.exports = {
   },
   ignorePatterns: ['.eslintrc.js'],
   rules: {
+    'simple-import-sort/imports': 'error',
+    'simple-import-sort/exports': 'error',
+    'require-await': 'error',
+    'no-console': ['error', { allow: ['warn', 'error'] }],
+
     '@typescript-eslint/ban-ts-comment': ['error', { 'ts-ignore': false }],
     '@typescript-eslint/interface-name-prefix': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
-
-    '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/explicit-function-return-type': 'error',
     '@typescript-eslint/no-unused-vars': [
       'error',
       {
@@ -31,11 +35,5 @@ module.exports = {
         varsIgnorePattern: '^_',
       },
     ],
-
-    'simple-import-sort/imports': 'error',
-    'simple-import-sort/exports': 'error',
-    'require-await': 'error',
-
-    'no-console': ['error', { allow: ['warn', 'error'] }],
   },
 };
