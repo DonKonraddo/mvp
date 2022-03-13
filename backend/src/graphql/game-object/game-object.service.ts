@@ -1,11 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { validate } from 'class-validator';
 import { Repository } from 'typeorm';
 
 import { CreateGameObjectInput } from '~/graphql/game-object/dto/create-game-object.input';
 import { GameObjectType } from '~/graphql/game-object/dto/game-object.type';
 import { UpdateGameObjectInput } from '~/graphql/game-object/dto/update-game-object.input';
 import { GameObject } from '~/graphql/game-object/entities/game-object.entity';
+import { GameObjectValidator } from '~/graphql/game-object/validators/game-object.validator';
+import { mapValidation } from '~/utils';
 
 @Injectable()
 export class GameObjectService {
@@ -14,7 +17,14 @@ export class GameObjectService {
     private gameObjectRepository: Repository<GameObject>,
   ) {}
 
-  create(createGameObjectInput: CreateGameObjectInput): Promise<GameObject> {
+  async create(
+    createGameObjectInput: CreateGameObjectInput,
+  ): Promise<GameObject> {
+    const gameObjectValidator = new GameObjectValidator(createGameObjectInput);
+    const validationErrors = mapValidation(await validate(gameObjectValidator));
+    if (validationErrors.length) {
+      throw new Error(validationErrors.join(';'));
+    }
     return this.gameObjectRepository.save(createGameObjectInput);
   }
 
